@@ -100,3 +100,44 @@ html {
     transform: translateY(0);
   }
 }
+
+/* ========================= */
+/* Work Showcase Section */
+/* ========================= */
+
+#showcase {
+  padding: 40px;
+}
+
+.showcase-group {
+  background: #c891c9;
+  border: 1px solid #f4b5f9;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 40px;
+}
+
+.showcase-group h3 {
+  margin-top: 0;
+  color: var(--text-dark);
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.showcase-grid img {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #f4b5f9;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.showcase-grid img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(255, 174, 220, 0.6);
+}
