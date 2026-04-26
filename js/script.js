@@ -1,6 +1,6 @@
 
 // Load working GitHub repos
-fetch('https://api.github.com/users/Scottsito/repos')
+fetch('https://api.github.com/users/oak-and-fire/repos')
   .then(response => response.json())
   .then(repos => {
     const list = document.getElementById('repo-list');
@@ -22,7 +22,7 @@ document.addEventListener('keydown', (e) => {
         document.getElementById('secret-input').addEventListener('keydown', (ev) => {
           if (ev.key === 'Enter') {
             if (ev.target.value.trim().toLowerCase() === 'mymind') {
-              window.location.href = 'https://scottsito.github.io/pbplqg/thoughts.html';
+              window.location.href = 'https://oak-and-fire.github.io/thoughts.html';
             }
           }
         });
@@ -31,7 +31,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Setup canvas
 const canvas = document.getElementById("bg-canvas");
 const ctx = canvas.getContext("2d");
 const dpr = window.devicePixelRatio || 1;
@@ -46,7 +45,7 @@ let viewW = window.innerWidth;
 let viewH = window.innerHeight;
 
 // Section to avoid
-const avoidSection = document.getElementById("about"); // change to your target section's ID
+const avoidSection = document.getElementById("about");
 let cachedAvoidBox = null;
 let avoidBoxRaf = 0;
 
@@ -138,7 +137,6 @@ scheduleAvoidBoxUpdate();
 
 function animate() {
   // Frame pacing: reduce work while scrolling to keep the page responsive.
-  // (Canvas animations can compete with scroll/render on some GPUs/CPUs.)
   const now = performance.now();
   if (!animate.lastTime) animate.lastTime = now;
   const targetFps = animate.isScrolling ? 24 : 60;
@@ -185,9 +183,13 @@ function animate() {
     if (p.y < 0 || p.y > h) p.dy *= -1;
 
     // Avoid section
-    if (avoidBox &&
-        p.x > avoidBox.left && p.x < avoidBox.right &&
-        p.y > avoidBox.top && p.y < avoidBox.bottom) {
+    if (
+      avoidBox &&
+      p.x > avoidBox.left &&
+      p.x < avoidBox.right &&
+      p.y > avoidBox.top &&
+      p.y < avoidBox.bottom
+    ) {
       p.dx *= -1;
       p.dy *= -1;
       p.x += p.dx * 2;
@@ -224,7 +226,7 @@ window.addEventListener(
 // Pause rendering when tab is hidden.
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
-    animate.isScrolling = true; // effectively drops to low fps; next rAF pauses anyway
+    animate.isScrolling = true;
   } else {
     animate.lastTime = 0;
     animate.isScrolling = false;
