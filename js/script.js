@@ -41,6 +41,10 @@ canvas.style.left = 0;
 canvas.style.zIndex = "-1";
 canvas.style.pointerEvents = "none";
 
+// Canvas size in CSS pixels (we draw in CSS px).
+let viewW = window.innerWidth;
+let viewH = window.innerHeight;
+
 // Section to avoid
 const avoidSection = document.getElementById("about"); // change to your target section's ID
 let cachedAvoidBox = null;
@@ -50,6 +54,8 @@ function resizeCanvas() {
   // Keep the canvas locked to the viewport to avoid scroll jank.
   const width = window.innerWidth;
   const height = window.innerHeight;
+  viewW = width;
+  viewH = height;
 
   canvas.style.width = width + "px";
   canvas.style.height = height + "px";
@@ -72,14 +78,37 @@ const particleCount = Math.min(
 );
 for (let i = 0; i < particleCount; i++) {
   particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
+    x: Math.random() * viewW,
+    y: Math.random() * viewH,
     radius: Math.random() * 2 + 1,
     dx: (Math.random() - 0.5) * 0.5,
     dy: (Math.random() - 0.5) * 0.5,
     color: particleColors[Math.floor(Math.random() * particleColors.length)],
   });
 }
+
+// Pointer interaction (mouse/touch) to "smack" particles around.
+const pointer = { x: 0, y: 0, active: false };
+const smackRadius = 140; // px
+const smackStrength = 0.55; // impulse strength
+
+window.addEventListener(
+  "pointermove",
+  (e) => {
+    pointer.active = true;
+    pointer.x = e.clientX;
+    pointer.y = e.clientY;
+  },
+  { passive: true }
+);
+window.addEventListener("pointerdown", (e) => {
+  pointer.active = true;
+  pointer.x = e.clientX;
+  pointer.y = e.clientY;
+});
+window.addEventListener("pointerleave", () => {
+  pointer.active = false;
+});
 
 // Get current position of the section to avoid
 function getAvoidBox() {
@@ -120,16 +149,36 @@ function animate() {
   }
   animate.lastTime = now;
 
-  // Clear in CSS pixels (we draw in CSS pixels after setTransform).
-  const w = canvas.width / dpr;
-  const h = canvas.height / dpr;
+  // Clear in CSS pixels (we draw in CSS px after setTransform).
+  const w = viewW;
+  const h = viewH;
   ctx.clearRect(0, 0, w, h);
   const avoidBox = cachedAvoidBox;
 
   for (let p of particles) {
+    // Smack away from pointer.
+    if (pointer.active) {
+      const vx = p.x - pointer.x;
+      const vy = p.y - pointer.y;
+      const dist2 = vx * vx + vy * vy;
+      const r2 = smackRadius * smackRadius;
+      if (dist2 > 0.0001 && dist2 < r2) {
+        const dist = Math.sqrt(dist2);
+        const falloff = (1 - dist / smackRadius) ** 2; // softer edge
+        const nx = vx / dist;
+        const ny = vy / dist;
+        p.dx += nx * smackStrength * falloff;
+        p.dy += ny * smackStrength * falloff;
+      }
+    }
+
     // Movement
     p.x += p.dx;
     p.y += p.dy;
+
+    // Mild damping so particles settle after a smack.
+    p.dx *= 0.994;
+    p.dy *= 0.994;
 
     // Bounce on edge
     if (p.x < 0 || p.x > w) p.dx *= -1;
