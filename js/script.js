@@ -43,32 +43,41 @@ canvas.style.pointerEvents = "none";
 
 // Section to avoid
 const avoidSection = document.getElementById("about"); // change to your target section's ID
+let cachedAvoidBox = null;
+let avoidBoxRaf = 0;
 
 function resizeCanvas() {
-  const width = document.documentElement.scrollWidth;
-  const height = document.documentElement.scrollHeight;
+  // Keep the canvas locked to the viewport to avoid scroll jank.
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
   canvas.style.width = width + "px";
   canvas.style.height = height + "px";
 
-  canvas.width = width * dpr;
-  canvas.height = height * dpr;
+  canvas.width = Math.floor(width * dpr);
+  canvas.height = Math.floor(height * dpr);
 
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // scale fix
+  // Draw in CSS pixels while backing store is DPR-scaled.
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 window.addEventListener("resize", resizeCanvas);
-window.addEventListener("scroll", resizeCanvas);
 resizeCanvas();
 
 // Create particles
 let particles = [];
-for (let i = 0; i < 1000; i++) {
+const particleColors = ["#14d8cc", "#c18211"];
+const particleCount = Math.min(
+  600,
+  Math.max(220, Math.floor((window.innerWidth * window.innerHeight) / 4500))
+);
+for (let i = 0; i < particleCount; i++) {
   particles.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
     radius: Math.random() * 2 + 1,
     dx: (Math.random() - 0.5) * 0.5,
     dy: (Math.random() - 0.5) * 0.5,
+    color: particleColors[Math.floor(Math.random() * particleColors.length)],
   });
 }
 
@@ -77,16 +86,45 @@ function getAvoidBox() {
   if (!avoidSection) return null;
   const rect = avoidSection.getBoundingClientRect();
   return {
-    left: rect.left + window.scrollX,
-    top: rect.top + window.scrollY,
-    right: rect.right + window.scrollX,
-    bottom: rect.bottom + window.scrollY
+    // Canvas coordinates are viewport coordinates (canvas is fixed).
+    left: rect.left,
+    top: rect.top,
+    right: rect.right,
+    bottom: rect.bottom,
   };
 }
 
+function scheduleAvoidBoxUpdate() {
+  if (avoidBoxRaf) return;
+  avoidBoxRaf = requestAnimationFrame(() => {
+    cachedAvoidBox = getAvoidBox();
+    avoidBoxRaf = 0;
+  });
+}
+
+// Update avoid box during scroll without forcing layout every frame.
+window.addEventListener("scroll", scheduleAvoidBoxUpdate, { passive: true });
+window.addEventListener("resize", scheduleAvoidBoxUpdate);
+scheduleAvoidBoxUpdate();
+
 function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const avoidBox = getAvoidBox();
+  // Frame pacing: reduce work while scrolling to keep the page responsive.
+  // (Canvas animations can compete with scroll/render on some GPUs/CPUs.)
+  const now = performance.now();
+  if (!animate.lastTime) animate.lastTime = now;
+  const targetFps = animate.isScrolling ? 24 : 60;
+  const minFrameMs = 1000 / targetFps;
+  if (now - animate.lastTime < minFrameMs) {
+    requestAnimationFrame(animate);
+    return;
+  }
+  animate.lastTime = now;
+
+  // Clear in CSS pixels (we draw in CSS pixels after setTransform).
+  const w = canvas.width / dpr;
+  const h = canvas.height / dpr;
+  ctx.clearRect(0, 0, w, h);
+  const avoidBox = cachedAvoidBox;
 
   for (let p of particles) {
     // Movement
@@ -94,8 +132,8 @@ function animate() {
     p.y += p.dy;
 
     // Bounce on edge
-    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    if (p.x < 0 || p.x > w) p.dx *= -1;
+    if (p.y < 0 || p.y > h) p.dy *= -1;
 
     // Avoid section
     if (avoidBox &&
@@ -110,10 +148,36 @@ function animate() {
     // Draw
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-    ctx.fillStyle = "#bb86fc"; // light pink
+    ctx.fillStyle = p.color;
     ctx.fill();
   }
 
   requestAnimationFrame(animate);
 }
 animate();
+
+// Lower animation cost during active scrolling.
+animate.isScrolling = false;
+animate.lastTime = 0;
+let scrollStopTimer = 0;
+window.addEventListener(
+  "scroll",
+  () => {
+    animate.isScrolling = true;
+    window.clearTimeout(scrollStopTimer);
+    scrollStopTimer = window.setTimeout(() => {
+      animate.isScrolling = false;
+    }, 140);
+  },
+  { passive: true }
+);
+
+// Pause rendering when tab is hidden.
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    animate.isScrolling = true; // effectively drops to low fps; next rAF pauses anyway
+  } else {
+    animate.lastTime = 0;
+    animate.isScrolling = false;
+  }
+});

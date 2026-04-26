@@ -2,174 +2,179 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Rowen's developer portfolio — projects, experience, and contact." />
   <title>Rowen | Home</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="assets/avatarHead.png" type="image/png" />
 </head>
 <body>
-<canvas id="bg-canvas" style="position: absolute; top: 0; left: 0; z-index: -1; pointer-events: none;"></canvas>
+  <canvas id="bg-canvas"></canvas>
 
   <header>
     <img src="assets/img.png" alt="Profile" id="profile-pic">
     <h1>Rowen</h1>
     <nav>
+      <a href="#about">About</a>
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
-      <a href="#about">Portfolio</a>
     </nav>
   </header>
   
-  <section class="fade-in" id="about">
-    <h2>Developer Portfolio</h2>
+  <main>
+    <section class="fade-in" id="about">
+      <h2>Developer Portfolio</h2>
 
-    <p>
-      I’m a developer who builds because I genuinely enjoy solving problems and pushing ideas further than they need to go.
-      I started experimenting with web projects and game development, which evolved into Minecraft modding,
-      browser-based client development, and production-level web deployments.
-    </p>
+      <p>
+        I’m a developer who builds because I genuinely enjoy solving problems and pushing ideas further than they need to go.
+        I started experimenting with web projects and game development, which evolved into Minecraft modding,
+        browser-based client development, and production-level web deployments.
+      </p>
 
-    <p>
-      I don’t just follow tutorials — I reverse engineer systems, debug deeply, and iterate until everything works exactly the way it should.
-    </p>
+      <p>
+        I don’t just follow tutorials — I reverse engineer systems, debug deeply, and iterate until everything works exactly the way it should.
+      </p>
 
-    <hr>
+      <hr>
 
-    <h3>Eaglercraft 1.12.2 Development – TuffClient Team</h3>
-    <p>
-      I worked with a team of Eaglercraft 1.12.2 developers on a custom client called <strong>TuffClient</strong>.
-      My role included feature implementation, client customization, debugging compatibility issues,
-      performance tuning, and adapting mechanics into a browser-based Minecraft environment.
-    </p>
+      <h3>Eaglercraft 1.12.2 Development – TuffClient Team</h3>
+      <p>
+        I worked with a team of Eaglercraft 1.12.2 developers on a custom client called <strong>TuffClient</strong>.
+        My role included feature implementation, client customization, debugging compatibility issues,
+        performance tuning, and adapting mechanics into a browser-based Minecraft environment.
+      </p>
 
-    <p>
-      Eaglercraft runs Minecraft in-browser through Java-to-JavaScript transpilation, which introduces constraints
-      most developers never deal with. I learned how to navigate those limitations efficiently while maintaining functionality.
-    </p>
+      <p>
+        Eaglercraft runs Minecraft in-browser through Java-to-JavaScript transpilation, which introduces constraints
+        most developers never deal with. I learned how to navigate those limitations efficiently while maintaining functionality.
+      </p>
 
-    <ul>
-      <li>Implemented and refined custom client features</li>
-      <li>Debugged complex behavior in constrained environments</li>
-      <li>Optimized performance for browser execution</li>
-      <li>Adapted mechanics from standard Minecraft into browser limitations</li>
-      <li>Collaborated within a shared repository and live project environment</li>
-    </ul>
+      <ul>
+        <li>Implemented and refined custom client features</li>
+        <li>Debugged complex behavior in constrained environments</li>
+        <li>Optimized performance for browser execution</li>
+        <li>Adapted mechanics from standard Minecraft into browser limitations</li>
+        <li>Collaborated within a shared repository and live project environment</li>
+      </ul>
 
-    <p>
-      On the team, I became known for fast debugging turnaround, strong understanding of Minecraft internals,
-      and meaningful contributions to an active development project.
-    </p>
+      <p>
+        On the team, I became known for fast debugging turnaround, strong understanding of Minecraft internals,
+        and meaningful contributions to an active development project.
+      </p>
 
-    <hr>
+      <hr>
 
-    <h3>Web Development – mathstudy.dev</h3>
-    <p>
-      I worked with the team at <strong>mathstudy.dev</strong> building and maintaining unblocked browser games
-      optimized for Chromebook environments.
-    </p>
+      <h3>Web Development – mathstudy.dev</h3>
+      <p>
+        I worked with the team at <strong>mathstudy.dev</strong> building and maintaining unblocked browser games
+        optimized for Chromebook environments.
+      </p>
 
-    <ul>
-      <li>Deployed browser-compatible games</li>
-      <li>Adapted frontend logic for restrictive school networks</li>
-      <li>Hosted and optimized static builds</li>
-      <li>Managed performance on lower-power devices</li>
-    </ul>
+      <ul>
+        <li>Deployed browser-compatible games</li>
+        <li>Adapted frontend logic for restrictive school networks</li>
+        <li>Hosted and optimized static builds</li>
+        <li>Managed performance on lower-power devices</li>
+      </ul>
 
-    <p>
-      This required creativity and adaptability, especially when working within browser sandboxing and network restrictions.
-      It strengthened my real-world web deployment and client-side optimization skills.
-    </p>
+      <p>
+        This required creativity and adaptability, especially when working within browser sandboxing and network restrictions.
+        It strengthened my real-world web deployment and client-side optimization skills.
+      </p>
 
-    <hr>
+      <hr>
 
-    <h3>Current Focus – Minecraft Forge Mod Development</h3>
-    <p>
-      I currently develop Minecraft mods using Forge. My projects include custom armor materials, tools,
-      crafting systems, trim integration, gameplay mechanics, and registry-based systems.
-    </p>
+      <h3>Current Focus – Minecraft Forge Mod Development</h3>
+      <p>
+        I currently develop Minecraft mods using Forge. My projects include custom armor materials, tools,
+        crafting systems, trim integration, gameplay mechanics, and registry-based systems.
+      </p>
 
-    <ul>
-      <li>Custom armor materials and tool tiers</li>
-      <li>Registry systems and item behavior configuration</li>
-      <li>Crafting & trim system integration</li>
-      <li>Event-driven gameplay mechanics</li>
-      <li>Gradle build debugging and datagen configuration</li>
-      <li>Compatibility troubleshooting</li>
-    </ul>
+      <ul>
+        <li>Custom armor materials and tool tiers</li>
+        <li>Registry systems and item behavior configuration</li>
+        <li>Crafting & trim system integration</li>
+        <li>Event-driven gameplay mechanics</li>
+        <li>Gradle build debugging and datagen configuration</li>
+        <li>Compatibility troubleshooting</li>
+      </ul>
 
-    <p>
-      My mod development relies heavily on object-oriented Java architecture and deep integration
-      with Minecraft’s internal systems.
-    </p>
+      <p>
+        My mod development relies heavily on object-oriented Java architecture and deep integration
+        with Minecraft’s internal systems.
+      </p>
 
-    <hr>
+      <hr>
 
-    <h3>Featured Web Projects</h3>
-    <ul>
-      <li><strong>GBA 2.0</strong> – Retro-inspired browser-based project focused on UI logic and responsive interaction</li>
-      <li><strong>LearningBridge</strong> – Educational web platform deployed via Vercel with modern responsive design</li>
-      <li><strong>Thoughts / ARG Project</strong> – Minimalistic hosted interactive experience</li>
-    </ul>
+      <h3>Featured Web Projects</h3>
+      <ul>
+        <li><strong>GBA 2.0</strong> – Retro-inspired browser-based project focused on UI logic and responsive interaction</li>
+        <li><strong>LearningBridge</strong> – Educational web platform deployed via Vercel with modern responsive design</li>
+        <li><strong>Thoughts / ARG Project</strong> – Minimalistic hosted interactive experience</li>
+      </ul>
 
-    <hr>
+      <hr>
 
-    <h3>Technical Skills</h3>
-    <ul>
-      <li><strong>Languages:</strong> Java, JavaScript, HTML, CSS</li>
-      <li><strong>Frameworks & APIs:</strong> Minecraft Forge</li>
-      <li><strong>Tools:</strong> Git, GitHub, Gradle, Vercel</li>
-      <li><strong>Core Strengths:</strong> Debugging complex issues, reverse engineering systems, working in constrained environments, independent problem-solving, collaborative development</li>
-    </ul>
+      <h3>Technical Skills</h3>
+      <ul>
+        <li><strong>Languages:</strong> Java, JavaScript, HTML, CSS</li>
+        <li><strong>Frameworks & APIs:</strong> Minecraft Forge</li>
+        <li><strong>Tools:</strong> Git, GitHub, Gradle, Vercel</li>
+        <li><strong>Core Strengths:</strong> Debugging complex issues, reverse engineering systems, working in constrained environments, independent problem-solving, collaborative development</li>
+      </ul>
 
-    <hr>
+      <hr>
 
-    <h3>What Sets Me Apart</h3>
-    <p>
-      I started building out of curiosity, not obligation. I’ve worked in browser-based Minecraft clients,
-      hosted web platforms, Chromebook-restricted systems, and full Java modding environments.
-    </p>
+      <h3>What Sets Me Apart</h3>
+      <p>
+        I started building out of curiosity, not obligation. I’ve worked in browser-based Minecraft clients,
+        hosted web platforms, Chromebook-restricted systems, and full Java modding environments.
+      </p>
 
-    <p>
-      That range gives me perspective across frontend user experience and backend systems logic.
-      When something breaks, I don’t stop at patching it — I find out why.
-    </p>
+      <p>
+        That range gives me perspective across frontend user experience and backend systems logic.
+        When something breaks, I don’t stop at patching it — I find out why.
+      </p>
 
-    <hr>
+      <hr>
 
-    <h3>What I’m Looking For</h3>
-    <p>
-      I’m looking to join a team where I can contribute to real projects, continue improving my backend
-      and systems knowledge, collaborate with driven developers, and build meaningful software.
-    </p>
+      <h3>What I’m Looking For</h3>
+      <p>
+        I’m looking to join a team where I can contribute to real projects, continue improving my backend
+        and systems knowledge, collaborate with driven developers, and build meaningful software.
+      </p>
 
-    <p>
-      Whether it's game development, web engineering, or technical tooling — I’m ready to build.
-    </p>
+      <p>
+        Whether it's game development, web engineering, or technical tooling — I’m ready to build.
+      </p>
 
-  </section>
+    </section>
 
-  <section class="fade-in" id="projects">
-    <h2>Featured Projects</h2>
-    <div class="project-list">
-      <a href="https://scottsito.github.io/GBA2.0/">🔧 GBA Emulator</a>
-      <a href="https://learningbridge.vercel.app/">🌐 LearningBridge (proxy) </a>
-    </div>
+    <section class="fade-in" id="projects">
+      <h2>Featured Projects</h2>
+      <div class="project-list">
+        <a href="https://scottsito.github.io/GBA2.0/">🔧 GBA Emulator</a>
+        <a href="https://learningbridge.vercel.app/">🌐 LearningBridge (proxy)</a>
+      </div>
 
-    <h2>More Projects (these are 100% gonna be crappy, i dont clean up my github.)</h2>
-    <div class="project-list" id="repo-list"></div>
-  </section>
+      <h2>More Projects</h2>
+      <p>Auto-loaded from GitHub.</p>
+      <div class="project-list" id="repo-list"></div>
+    </section>
 
-  <section class="fade-in" id="contact">
-    <h2>Contact Me</h2>
-    <p>Discord: oak_and_fire</p>
-  </section>
+    <section class="fade-in" id="contact">
+      <h2>Contact</h2>
+      <p>Discord: <strong>oak_and_fire</strong></p>
+    </section>
+  </main>
 
   <div id="secret-box" style="display:none;">
     <input type="text" id="secret-input" placeholder="Enter the phrase..." />
   </div>
 
   <footer>
-    &copy; 2026 Rowen Robarge. Built with 💜 and daikon legs.
+    &copy; 2026 Rowen Robarge. Built with ❤️.
   </footer>
 
   <script src="js/script.js"></script>
